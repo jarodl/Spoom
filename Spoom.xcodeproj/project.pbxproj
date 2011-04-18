@@ -157,10 +157,9 @@
 		7A4A7E1C135A99F500A703A5 /* b2WeldJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A4A7E1B135A99F500A703A5 /* b2WeldJoint.cpp */; };
 		7A4A7E21135A99F600A703A5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A4A7E20135A99F600A703A5 /* main.m */; };
 		7A4A7E24135A99F600A703A5 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7A4A7E23135A99F600A703A5 /* AppDelegate.mm */; };
-		7A4A7E27135A99F600A703A5 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A4A7E26135A99F600A703A5 /* RootViewController.m */; };
-		7A4A7E2A135A99F600A703A5 /* HelloWorldLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7A4A7E29135A99F600A703A5 /* HelloWorldLayer.mm */; };
 		7A4A7E2D135A99F600A703A5 /* GLES-Render.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7A4A7E2C135A99F600A703A5 /* GLES-Render.mm */; };
-		7A4A7E30135A99F600A703A5 /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A4A7E2F135A99F600A703A5 /* blocks.png */; };
+		7A4A7E41135BC17C00A703A5 /* MenuScene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7A4A7E40135BC17C00A703A5 /* MenuScene.mm */; };
+		7A4A7E44135BC21A00A703A5 /* GameScene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7A4A7E43135BC21A00A703A5 /* GameScene.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -465,14 +464,13 @@
 		7A4A7E20135A99F600A703A5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		7A4A7E22135A99F600A703A5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		7A4A7E23135A99F600A703A5 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
-		7A4A7E25135A99F600A703A5 /* RootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
-		7A4A7E26135A99F600A703A5 /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
-		7A4A7E28135A99F600A703A5 /* HelloWorldLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelloWorldLayer.h; sourceTree = "<group>"; };
-		7A4A7E29135A99F600A703A5 /* HelloWorldLayer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = HelloWorldLayer.mm; sourceTree = "<group>"; };
 		7A4A7E2B135A99F600A703A5 /* GLES-Render.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GLES-Render.h"; sourceTree = "<group>"; };
 		7A4A7E2C135A99F600A703A5 /* GLES-Render.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "GLES-Render.mm"; sourceTree = "<group>"; };
 		7A4A7E2E135A99F600A703A5 /* GameConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameConfig.h; sourceTree = "<group>"; };
-		7A4A7E2F135A99F600A703A5 /* blocks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = blocks.png; path = Resources/blocks.png; sourceTree = "<group>"; };
+		7A4A7E3F135BC17C00A703A5 /* MenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuScene.h; path = Scenes/MenuScene.h; sourceTree = "<group>"; };
+		7A4A7E40135BC17C00A703A5 /* MenuScene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MenuScene.mm; path = Scenes/MenuScene.mm; sourceTree = "<group>"; };
+		7A4A7E42135BC21A00A703A5 /* GameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameScene.h; path = Scenes/GameScene.h; sourceTree = "<group>"; };
+		7A4A7E43135BC21A00A703A5 /* GameScene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GameScene.mm; path = Scenes/GameScene.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -529,12 +527,9 @@
 		7A4A7C6A135A99F200A703A5 /* Spoom */ = {
 			isa = PBXGroup;
 			children = (
+				7A4A7E3E135BC14A00A703A5 /* Scenes */,
 				7A4A7E22135A99F600A703A5 /* AppDelegate.h */,
 				7A4A7E23135A99F600A703A5 /* AppDelegate.mm */,
-				7A4A7E25135A99F600A703A5 /* RootViewController.h */,
-				7A4A7E26135A99F600A703A5 /* RootViewController.m */,
-				7A4A7E28135A99F600A703A5 /* HelloWorldLayer.h */,
-				7A4A7E29135A99F600A703A5 /* HelloWorldLayer.mm */,
 				7A4A7E2B135A99F600A703A5 /* GLES-Render.h */,
 				7A4A7E2C135A99F600A703A5 /* GLES-Render.mm */,
 				7A4A7E2E135A99F600A703A5 /* GameConfig.h */,
@@ -563,7 +558,6 @@
 				7A4A7C7A135A99F200A703A5 /* Icon@2x.png */,
 				7A4A7C7C135A99F200A703A5 /* Info.plist */,
 				7A4A7C7D135A99F200A703A5 /* iTunesArtwork */,
-				7A4A7E2F135A99F600A703A5 /* blocks.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -897,6 +891,17 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		7A4A7E3E135BC14A00A703A5 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				7A4A7E3F135BC17C00A703A5 /* MenuScene.h */,
+				7A4A7E40135BC17C00A703A5 /* MenuScene.mm */,
+				7A4A7E42135BC21A00A703A5 /* GameScene.h */,
+				7A4A7E43135BC21A00A703A5 /* GameScene.mm */,
+			);
+			name = Scenes;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -953,7 +958,6 @@
 				7A4A7C79135A99F200A703A5 /* Icon.png in Resources */,
 				7A4A7C7B135A99F200A703A5 /* Icon@2x.png in Resources */,
 				7A4A7C7E135A99F200A703A5 /* iTunesArtwork in Resources */,
-				7A4A7E30135A99F600A703A5 /* blocks.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1097,9 +1101,9 @@
 				7A4A7E1C135A99F500A703A5 /* b2WeldJoint.cpp in Sources */,
 				7A4A7E21135A99F600A703A5 /* main.m in Sources */,
 				7A4A7E24135A99F600A703A5 /* AppDelegate.mm in Sources */,
-				7A4A7E27135A99F600A703A5 /* RootViewController.m in Sources */,
-				7A4A7E2A135A99F600A703A5 /* HelloWorldLayer.mm in Sources */,
 				7A4A7E2D135A99F600A703A5 /* GLES-Render.mm in Sources */,
+				7A4A7E41135BC17C00A703A5 /* MenuScene.mm in Sources */,
+				7A4A7E44135BC21A00A703A5 /* GameScene.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
