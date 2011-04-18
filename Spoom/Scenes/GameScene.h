@@ -17,6 +17,11 @@ typedef enum
 	
 } GameSceneNodeTags;
 
+enum
+{
+	kTagBatchNode,
+};
+
 @interface GameScene : CCLayer
 {
     b2World* world;
@@ -24,5 +29,7 @@ typedef enum
 }
 
 + (CCScene *)scene;
++ (GameScene *)sharedGameScene;
+- (CCSpriteBatchNode *)getSpriteBatch;
 
 @end

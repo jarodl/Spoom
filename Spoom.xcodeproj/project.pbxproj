@@ -160,8 +160,11 @@
 		7A4A7E2D135A99F600A703A5 /* GLES-Render.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7A4A7E2C135A99F600A703A5 /* GLES-Render.mm */; };
 		7A4A7E41135BC17C00A703A5 /* MenuScene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7A4A7E40135BC17C00A703A5 /* MenuScene.mm */; };
 		7A4A7E44135BC21A00A703A5 /* GameScene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7A4A7E43135BC21A00A703A5 /* GameScene.mm */; };
-		7A4A7E58135BCE3600A703A5 /* spoom.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7A4A7E56135BCE3600A703A5 /* spoom.plist */; };
-		7A4A7E59135BCE3600A703A5 /* spoom.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A4A7E57135BCE3600A703A5 /* spoom.png */; };
+		7A4A7E6D135BD6DE00A703A5 /* Bubble.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7A4A7E6C135BD6DE00A703A5 /* Bubble.mm */; };
+		7A4A7E70135BD71900A703A5 /* BodyNode.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7A4A7E6F135BD71900A703A5 /* BodyNode.mm */; };
+		7A4A7E7B135BDDDC00A703A5 /* spoom.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7A4A7E79135BDDDB00A703A5 /* spoom.plist */; };
+		7A4A7E7C135BDDDC00A703A5 /* spoom.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A4A7E7A135BDDDC00A703A5 /* spoom.png */; };
+		7A4A7E81135BE8EE00A703A5 /* Helper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7A4A7E80135BE8EE00A703A5 /* Helper.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -468,13 +471,19 @@
 		7A4A7E23135A99F600A703A5 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		7A4A7E2B135A99F600A703A5 /* GLES-Render.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GLES-Render.h"; sourceTree = "<group>"; };
 		7A4A7E2C135A99F600A703A5 /* GLES-Render.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "GLES-Render.mm"; sourceTree = "<group>"; };
-		7A4A7E2E135A99F600A703A5 /* GameConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameConfig.h; sourceTree = "<group>"; };
 		7A4A7E3F135BC17C00A703A5 /* MenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuScene.h; path = Scenes/MenuScene.h; sourceTree = "<group>"; };
 		7A4A7E40135BC17C00A703A5 /* MenuScene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MenuScene.mm; path = Scenes/MenuScene.mm; sourceTree = "<group>"; };
 		7A4A7E42135BC21A00A703A5 /* GameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameScene.h; path = Scenes/GameScene.h; sourceTree = "<group>"; };
 		7A4A7E43135BC21A00A703A5 /* GameScene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GameScene.mm; path = Scenes/GameScene.mm; sourceTree = "<group>"; };
-		7A4A7E56135BCE3600A703A5 /* spoom.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = spoom.plist; sourceTree = "<group>"; };
-		7A4A7E57135BCE3600A703A5 /* spoom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spoom.png; sourceTree = "<group>"; };
+		7A4A7E6B135BD6DE00A703A5 /* Bubble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Bubble.h; path = "Game Objects/Bubble.h"; sourceTree = "<group>"; };
+		7A4A7E6C135BD6DE00A703A5 /* Bubble.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Bubble.mm; path = "Game Objects/Bubble.mm"; sourceTree = "<group>"; };
+		7A4A7E6E135BD71900A703A5 /* BodyNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BodyNode.h; sourceTree = "<group>"; };
+		7A4A7E6F135BD71900A703A5 /* BodyNode.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BodyNode.mm; sourceTree = "<group>"; };
+		7A4A7E79135BDDDB00A703A5 /* spoom.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = spoom.plist; path = Resources/spoom.plist; sourceTree = "<group>"; };
+		7A4A7E7A135BDDDC00A703A5 /* spoom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = spoom.png; path = Resources/spoom.png; sourceTree = "<group>"; };
+		7A4A7E7F135BE8EE00A703A5 /* Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Helper.h; path = Helper/Helper.h; sourceTree = "<group>"; };
+		7A4A7E80135BE8EE00A703A5 /* Helper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Helper.mm; path = Helper/Helper.mm; sourceTree = "<group>"; };
+		7A4A7E85135BEBC700A703A5 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -531,12 +540,13 @@
 		7A4A7C6A135A99F200A703A5 /* Spoom */ = {
 			isa = PBXGroup;
 			children = (
+				7A4A7E7E135BE8DA00A703A5 /* Helper */,
+				7A4A7E6A135BD6B000A703A5 /* Game Objects */,
 				7A4A7E3E135BC14A00A703A5 /* Scenes */,
 				7A4A7E22135A99F600A703A5 /* AppDelegate.h */,
 				7A4A7E23135A99F600A703A5 /* AppDelegate.mm */,
 				7A4A7E2B135A99F600A703A5 /* GLES-Render.h */,
 				7A4A7E2C135A99F600A703A5 /* GLES-Render.mm */,
-				7A4A7E2E135A99F600A703A5 /* GameConfig.h */,
 				7A4A7C6B135A99F200A703A5 /* Resources */,
 				7A4A7C7F135A99F200A703A5 /* cocos2d */,
 				7A4A7D70135A99F400A703A5 /* CocosDenshion */,
@@ -552,8 +562,8 @@
 		7A4A7C6B135A99F200A703A5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				7A4A7E56135BCE3600A703A5 /* spoom.plist */,
-				7A4A7E57135BCE3600A703A5 /* spoom.png */,
+				7A4A7E79135BDDDB00A703A5 /* spoom.plist */,
+				7A4A7E7A135BDDDC00A703A5 /* spoom.png */,
 				7A4A7C6C135A99F200A703A5 /* Default.png */,
 				7A4A7C6E135A99F200A703A5 /* fps_images.png */,
 				7A4A7C70135A99F200A703A5 /* Icon-72.png */,
@@ -908,6 +918,27 @@
 			name = Scenes;
 			sourceTree = "<group>";
 		};
+		7A4A7E6A135BD6B000A703A5 /* Game Objects */ = {
+			isa = PBXGroup;
+			children = (
+				7A4A7E6E135BD71900A703A5 /* BodyNode.h */,
+				7A4A7E6F135BD71900A703A5 /* BodyNode.mm */,
+				7A4A7E6B135BD6DE00A703A5 /* Bubble.h */,
+				7A4A7E6C135BD6DE00A703A5 /* Bubble.mm */,
+			);
+			name = "Game Objects";
+			sourceTree = "<group>";
+		};
+		7A4A7E7E135BE8DA00A703A5 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				7A4A7E7F135BE8EE00A703A5 /* Helper.h */,
+				7A4A7E80135BE8EE00A703A5 /* Helper.mm */,
+				7A4A7E85135BEBC700A703A5 /* Constants.h */,
+			);
+			name = Helper;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -964,8 +995,8 @@
 				7A4A7C79135A99F200A703A5 /* Icon.png in Resources */,
 				7A4A7C7B135A99F200A703A5 /* Icon@2x.png in Resources */,
 				7A4A7C7E135A99F200A703A5 /* iTunesArtwork in Resources */,
-				7A4A7E58135BCE3600A703A5 /* spoom.plist in Resources */,
-				7A4A7E59135BCE3600A703A5 /* spoom.png in Resources */,
+				7A4A7E7B135BDDDC00A703A5 /* spoom.plist in Resources */,
+				7A4A7E7C135BDDDC00A703A5 /* spoom.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1112,6 +1143,9 @@
 				7A4A7E2D135A99F600A703A5 /* GLES-Render.mm in Sources */,
 				7A4A7E41135BC17C00A703A5 /* MenuScene.mm in Sources */,
 				7A4A7E44135BC21A00A703A5 /* GameScene.mm in Sources */,
+				7A4A7E6D135BD6DE00A703A5 /* Bubble.mm in Sources */,
+				7A4A7E70135BD71900A703A5 /* BodyNode.mm in Sources */,
+				7A4A7E81135BE8EE00A703A5 /* Helper.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

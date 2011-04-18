@@ -9,7 +9,6 @@
 #import "cocos2d.h"
 
 #import "AppDelegate.h"
-#import "GameConfig.h"
 #import "MenuScene.h"
 
 @implementation AppDelegate

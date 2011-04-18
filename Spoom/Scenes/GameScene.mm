@@ -7,15 +7,33 @@
 //
 
 #import "GameScene.h"
+#import "Helper.h"
+#import "Constants.h"
+#import "Bubble.h"
 
 #define kFilterFactor 1.0f	// don't use filter. the code is here just as an example
-#define PTM_RATIO 32
 
 #define kGameSpriteImageName @"spoom.png"
-#define kGameSpriteFilename @"spoom.plist"
+#define kGameSpriteDataFilename @"spoom.plist"
 #define kGroundSpriteFilename @"ground.png"
 
 @implementation GameScene
+
+#pragma mark -
+#pragma mark Helpers
+
+static GameScene *gameSceneInstance = nil;
+
++ (GameScene *)sharedGameScene
+{
+    NSAssert(gameSceneInstance != nil, @"game scene not yet initialized!");
+	return gameSceneInstance;
+}
+
+- (CCSpriteBatchNode *)getSpriteBatch
+{
+    return (CCSpriteBatchNode *)[self getChildByTag:kTagBatchNode];
+}
 
 #pragma mark -
 #pragma mark Initialization
@@ -33,6 +51,7 @@
 {
 	if((self = [super init]))
     {
+        gameSceneInstance = self;
 		// enable touches
 		self.isTouchEnabled = YES;
 		// enable accelerometer
@@ -66,12 +85,25 @@
         //		flags += b2DebugDraw::e_centerOfMassBit;
 		m_debugDraw->SetFlags(flags);
         
-        //Set up sprites
+        // Add the background color
+		CCLayerGradient *gradientLayer = [CCLayerGradient layerWithColor:ccc4(52, 179, 189, 1) fadingTo:ccc4(89, 190, 199, 1)];
+		[self addChild:gradientLayer z:-3];
+        
+        // Load all sprite data from the plist
 		CCSpriteFrameCache* frameCache = [CCSpriteFrameCache sharedSpriteFrameCache];
-		[frameCache addSpriteFramesWithFile:kGameSpriteFilename];
+		[frameCache addSpriteFramesWithFile:kGameSpriteDataFilename];
+        
+        // batch node for all dynamic elements
+		CCSpriteBatchNode* batch = [CCSpriteBatchNode batchNodeWithFile:kGameSpriteImageName capacity:100];
+		[self addChild:batch z:-2 tag:kTagBatchNode];
+        
+        // Grab the ground sprite
         CCSprite *groundSprite = [CCSprite spriteWithSpriteFrameName:kGroundSpriteFilename];
-        groundSprite.position = CGPointMake(groundSprite.contentSize.width / 2, groundSprite.contentSize.height / 2);
-        CCLOG(@"Positioned %@ at: (%f, %f)", groundSprite, groundSprite.position.x, groundSprite.position.y);
+        groundSprite.position = CGPointMake(groundSprite.contentSize.width / 2,
+                                            groundSprite.contentSize.height / 2);
+        CCLOG(@"Positioned %@ at: (%f, %f)",
+              groundSprite, groundSprite.position.x,
+              groundSprite.position.y);
         [self addChild:groundSprite];
 		
 		// Define the ground body.
@@ -84,31 +116,33 @@
 		b2Body* groundBody = world->CreateBody(&groundBodyDef);
 		
 		// Define the ground box shape.
-		b2PolygonShape groundBox;		
-		
+		b2PolygonShape groundBox;
+        
+        CGSize screenSizeInMeters = [Helper sizeToMeters:screenSize];
+        
 		// bottom
 		groundBox.SetAsEdge(b2Vec2(0, groundSprite.contentSize.height / PTM_RATIO),
                             b2Vec2(screenSize.width/PTM_RATIO, groundSprite.contentSize.height / PTM_RATIO));
 		groundBody->CreateFixture(&groundBox,0);
-		
 		// top
-		groundBox.SetAsEdge(b2Vec2(0, screenSize.height/PTM_RATIO),
-                            b2Vec2(screenSize.width/PTM_RATIO, screenSize.height/PTM_RATIO));
+		groundBox.SetAsEdge(b2Vec2(0, screenSizeInMeters.height),
+                            b2Vec2(screenSizeInMeters.width, screenSizeInMeters.height));
 		groundBody->CreateFixture(&groundBox,0);
-		
 		// left
-		groundBox.SetAsEdge(b2Vec2(0, screenSize.height/PTM_RATIO), b2Vec2(0,0));
+		groundBox.SetAsEdge(b2Vec2(0, screenSizeInMeters.height), b2Vec2(0,0));
 		groundBody->CreateFixture(&groundBox,0);
-		
 		// right
-		groundBox.SetAsEdge(b2Vec2(screenSize.width/PTM_RATIO, screenSize.height/PTM_RATIO),
-                            b2Vec2(screenSize.width/PTM_RATIO, 0));
+		groundBox.SetAsEdge(b2Vec2(screenSizeInMeters.width, screenSizeInMeters.height),
+                            b2Vec2(screenSizeInMeters.width, 0));
 		groundBody->CreateFixture(&groundBox,0);
+        
+        Bubble *bubble = [Bubble bubbleWithWorld:world];
+        [self addChild:bubble];
 		
 		CCLabelTTF *label = [CCLabelTTF labelWithString:@"Tap screen" fontName:@"Marker Felt" fontSize:32];
 		[self addChild:label z:0];
 		[label setColor:ccc3(0,0,255)];
-		label.position = ccp( screenSize.width/2, screenSize.height-50);
+		label.position = ccp(screenSize.width/2, screenSize.height - 50);
 		
 		[self schedule: @selector(tick:)];
 	}
@@ -139,28 +173,25 @@
 
 - (void)tick:(ccTime)dt
 {
-	//It is recommended that a fixed time step is used with Box2D for stability
-	//of the simulation, however, we are using a variable time step here.
-	//You need to make an informed choice, the following URL is useful
-	//http://gafferongames.com/game-physics/fix-your-timestep/
-	
+	// The number of iterations influence the accuracy of the physics simulation. With higher values the
+	// body's velocity and position are more accurately tracked but at the cost of speed.
+	// Usually for games only 1 position iteration is necessary to achieve good results.
+	float timeStep = 0.03f;
 	int32 velocityIterations = 8;
 	int32 positionIterations = 1;
+	world->Step(timeStep, velocityIterations, positionIterations);
 	
-	// Instruct the world to perform a single step of simulation. It is
-	// generally best to keep the time step and iterations fixed.
-	world->Step(dt, velocityIterations, positionIterations);
-    
-	
-	//Iterate over the bodies in the physics world
-	for (b2Body* b = world->GetBodyList(); b; b = b->GetNext())
+	// for each body, get its assigned BodyNode and update the sprite's position
+	for (b2Body* body = world->GetBodyList(); body != nil; body = body->GetNext())
 	{
-		if (b->GetUserData() != NULL) {
-			//Synchronize the AtlasSprites position and rotation with the corresponding body
-			CCSprite *myActor = (CCSprite*)b->GetUserData();
-			myActor.position = CGPointMake(b->GetPosition().x * PTM_RATIO, b->GetPosition().y * PTM_RATIO);
-			myActor.rotation = -1 * CC_RADIANS_TO_DEGREES(b->GetAngle());
-		}	
+		BodyNode* bodyNode = (BodyNode*)body->GetUserData();
+		if (bodyNode != NULL && bodyNode.sprite != nil)
+		{
+			// update the sprite's position to where their physics bodies are
+			bodyNode.sprite.position = [Helper toPixels:body->GetPosition()];
+			float angle = body->GetAngle();
+			bodyNode.sprite.rotation = -(CC_RADIANS_TO_DEGREES(angle));
+		}
 	}
 }
 
@@ -180,19 +211,19 @@
 
 - (void)accelerometer:(UIAccelerometer*)accelerometer didAccelerate:(UIAcceleration*)acceleration
 {	
-	static float prevX=0, prevY=0;
-	
-	float accelX = (float) acceleration.x * kFilterFactor + (1- kFilterFactor)*prevX;
-	float accelY = (float) acceleration.y * kFilterFactor + (1- kFilterFactor)*prevY;
-	
-	prevX = accelX;
-	prevY = accelY;
-	
-	// accelerometer values are in "Portrait" mode. Change them to Landscape left
-	// multiply the gravity by 10
-	b2Vec2 gravity(-accelY * 10, accelX * 10);
-	
-	world->SetGravity(gravity);
+//	static float prevX=0, prevY=0;
+//	
+//	float accelX = (float) acceleration.x * kFilterFactor + (1- kFilterFactor)*prevX;
+//	float accelY = (float) acceleration.y * kFilterFactor + (1- kFilterFactor)*prevY;
+//	
+//	prevX = accelX;
+//	prevY = accelY;
+//	
+//	// accelerometer values are in "Portrait" mode. Change them to Landscape left
+//	// multiply the gravity by 10
+//	b2Vec2 gravity(-accelY * 10, accelX * 10);
+//	
+//	world->SetGravity(gravity);
 }
 
 #pragma mark -
