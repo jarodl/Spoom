@@ -11,6 +11,10 @@
 #define kFilterFactor 1.0f	// don't use filter. the code is here just as an example
 #define PTM_RATIO 32
 
+#define kGameSpriteImageName @"spoom.png"
+#define kGameSpriteFilename @"spoom.plist"
+#define kGroundSpriteFilename @"ground.png"
+
 @implementation GameScene
 
 #pragma mark -
@@ -60,7 +64,15 @@
         //		flags += b2DebugDraw::e_aabbBit;
         //		flags += b2DebugDraw::e_pairBit;
         //		flags += b2DebugDraw::e_centerOfMassBit;
-		m_debugDraw->SetFlags(flags);		
+		m_debugDraw->SetFlags(flags);
+        
+        //Set up sprites
+		CCSpriteFrameCache* frameCache = [CCSpriteFrameCache sharedSpriteFrameCache];
+		[frameCache addSpriteFramesWithFile:kGameSpriteFilename];
+        CCSprite *groundSprite = [CCSprite spriteWithSpriteFrameName:kGroundSpriteFilename];
+        groundSprite.position = CGPointMake(groundSprite.contentSize.width / 2, groundSprite.contentSize.height / 2);
+        CCLOG(@"Positioned %@ at: (%f, %f)", groundSprite, groundSprite.position.x, groundSprite.position.y);
+        [self addChild:groundSprite];
 		
 		// Define the ground body.
 		b2BodyDef groundBodyDef;
@@ -75,11 +87,13 @@
 		b2PolygonShape groundBox;		
 		
 		// bottom
-		groundBox.SetAsEdge(b2Vec2(0, 0), b2Vec2(screenSize.width/PTM_RATIO,0));
+		groundBox.SetAsEdge(b2Vec2(0, groundSprite.contentSize.height / PTM_RATIO),
+                            b2Vec2(screenSize.width/PTM_RATIO, groundSprite.contentSize.height / PTM_RATIO));
 		groundBody->CreateFixture(&groundBox,0);
 		
 		// top
-		groundBox.SetAsEdge(b2Vec2(0, screenSize.height/PTM_RATIO), b2Vec2(screenSize.width/PTM_RATIO, screenSize.height/PTM_RATIO));
+		groundBox.SetAsEdge(b2Vec2(0, screenSize.height/PTM_RATIO),
+                            b2Vec2(screenSize.width/PTM_RATIO, screenSize.height/PTM_RATIO));
 		groundBody->CreateFixture(&groundBox,0);
 		
 		// left
@@ -87,12 +101,9 @@
 		groundBody->CreateFixture(&groundBox,0);
 		
 		// right
-		groundBox.SetAsEdge(b2Vec2(screenSize.width/PTM_RATIO, screenSize.height/PTM_RATIO), b2Vec2(screenSize.width/PTM_RATIO, 0));
+		groundBox.SetAsEdge(b2Vec2(screenSize.width/PTM_RATIO, screenSize.height/PTM_RATIO),
+                            b2Vec2(screenSize.width/PTM_RATIO, 0));
 		groundBody->CreateFixture(&groundBox,0);
-		
-		//Set up sprites
-//		CCSpriteBatchNode *batch = [CCSpriteBatchNode batchNodeWithFile:@"blocks.png" capacity:150];
-//		[self addChild:batch z:0 tag:kTagBatchNode];
 		
 		CCLabelTTF *label = [CCLabelTTF labelWithString:@"Tap screen" fontName:@"Marker Felt" fontSize:32];
 		[self addChild:label z:0];

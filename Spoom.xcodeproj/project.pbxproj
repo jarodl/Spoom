@@ -160,6 +160,8 @@
 		7A4A7E2D135A99F600A703A5 /* GLES-Render.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7A4A7E2C135A99F600A703A5 /* GLES-Render.mm */; };
 		7A4A7E41135BC17C00A703A5 /* MenuScene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7A4A7E40135BC17C00A703A5 /* MenuScene.mm */; };
 		7A4A7E44135BC21A00A703A5 /* GameScene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7A4A7E43135BC21A00A703A5 /* GameScene.mm */; };
+		7A4A7E58135BCE3600A703A5 /* spoom.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7A4A7E56135BCE3600A703A5 /* spoom.plist */; };
+		7A4A7E59135BCE3600A703A5 /* spoom.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A4A7E57135BCE3600A703A5 /* spoom.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -471,6 +473,8 @@
 		7A4A7E40135BC17C00A703A5 /* MenuScene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MenuScene.mm; path = Scenes/MenuScene.mm; sourceTree = "<group>"; };
 		7A4A7E42135BC21A00A703A5 /* GameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameScene.h; path = Scenes/GameScene.h; sourceTree = "<group>"; };
 		7A4A7E43135BC21A00A703A5 /* GameScene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GameScene.mm; path = Scenes/GameScene.mm; sourceTree = "<group>"; };
+		7A4A7E56135BCE3600A703A5 /* spoom.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = spoom.plist; sourceTree = "<group>"; };
+		7A4A7E57135BCE3600A703A5 /* spoom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spoom.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -548,6 +552,8 @@
 		7A4A7C6B135A99F200A703A5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7A4A7E56135BCE3600A703A5 /* spoom.plist */,
+				7A4A7E57135BCE3600A703A5 /* spoom.png */,
 				7A4A7C6C135A99F200A703A5 /* Default.png */,
 				7A4A7C6E135A99F200A703A5 /* fps_images.png */,
 				7A4A7C70135A99F200A703A5 /* Icon-72.png */,
@@ -958,6 +964,8 @@
 				7A4A7C79135A99F200A703A5 /* Icon.png in Resources */,
 				7A4A7C7B135A99F200A703A5 /* Icon@2x.png in Resources */,
 				7A4A7C7E135A99F200A703A5 /* iTunesArtwork in Resources */,
+				7A4A7E58135BCE3600A703A5 /* spoom.plist in Resources */,
+				7A4A7E59135BCE3600A703A5 /* spoom.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
