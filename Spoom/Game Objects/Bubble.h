@@ -10,6 +10,8 @@
 
 @interface Bubble : BodyNode
 {
+    float _velocity;
+    CGPoint _startPosition;
 }
 
 + (id)bubbleWithWorld:(b2World *)world;

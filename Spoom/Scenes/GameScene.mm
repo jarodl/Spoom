@@ -16,6 +16,7 @@
 #define kGameSpriteImageName @"spoom.png"
 #define kGameSpriteDataFilename @"spoom.plist"
 #define kGroundSpriteFilename @"ground.png"
+#define kBackgroundSpriteFilename @"background.png"
 
 @implementation GameScene
 
@@ -64,19 +65,11 @@ static GameScene *gameSceneInstance = nil;
 		b2Vec2 gravity;
 		gravity.Set(0.0f, -10.0f);
 		
-		// Do we want to let bodies sleep?
-		// This will speed up the physics simulation
-		bool doSleep = true;
-		
-		// Construct a world object, which will hold and simulate the rigid bodies.
+		bool doSleep = false;
 		world = new b2World(gravity, doSleep);
-		
 		world->SetContinuousPhysics(true);
-		
-		// Debug Draw functions
 		m_debugDraw = new GLESDebugDraw(PTM_RATIO);
 		world->SetDebugDraw(m_debugDraw);
-		
 		uint32 flags = 0;
 		flags += b2DebugDraw::e_shapeBit;
         //		flags += b2DebugDraw::e_jointBit;
@@ -84,10 +77,6 @@ static GameScene *gameSceneInstance = nil;
         //		flags += b2DebugDraw::e_pairBit;
         //		flags += b2DebugDraw::e_centerOfMassBit;
 		m_debugDraw->SetFlags(flags);
-        
-        // Add the background color
-		CCLayerGradient *gradientLayer = [CCLayerGradient layerWithColor:ccc4(52, 179, 189, 1) fadingTo:ccc4(89, 190, 199, 1)];
-		[self addChild:gradientLayer z:-3];
         
         // Load all sprite data from the plist
 		CCSpriteFrameCache* frameCache = [CCSpriteFrameCache sharedSpriteFrameCache];
@@ -105,6 +94,11 @@ static GameScene *gameSceneInstance = nil;
               groundSprite, groundSprite.position.x,
               groundSprite.position.y);
         [self addChild:groundSprite];
+        
+        CCSprite *background = [CCSprite spriteWithSpriteFrameName:kBackgroundSpriteFilename];
+        background.position = CGPointMake(background.contentSize.width / 2,
+                                          background.contentSize.height / 2 + groundSprite.contentSize.height);
+        [self addChild:background z:-3];
 		
 		// Define the ground body.
 		b2BodyDef groundBodyDef;
@@ -138,11 +132,6 @@ static GameScene *gameSceneInstance = nil;
         
         Bubble *bubble = [Bubble bubbleWithWorld:world];
         [self addChild:bubble];
-		
-		CCLabelTTF *label = [CCLabelTTF labelWithString:@"Tap screen" fontName:@"Marker Felt" fontSize:32];
-		[self addChild:label z:0];
-		[label setColor:ccc3(0,0,255)];
-		label.position = ccp(screenSize.width/2, screenSize.height - 50);
 		
 		[self schedule: @selector(tick:)];
 	}
@@ -184,13 +173,13 @@ static GameScene *gameSceneInstance = nil;
 	// for each body, get its assigned BodyNode and update the sprite's position
 	for (b2Body* body = world->GetBodyList(); body != nil; body = body->GetNext())
 	{
-		BodyNode* bodyNode = (BodyNode*)body->GetUserData();
-		if (bodyNode != NULL && bodyNode.sprite != nil)
+		Bubble* bubble = (Bubble *)body->GetUserData();
+		if (bubble != NULL && bubble.sprite != nil)
 		{
 			// update the sprite's position to where their physics bodies are
-			bodyNode.sprite.position = [Helper toPixels:body->GetPosition()];
+			bubble.sprite.position = [Helper toPixels:body->GetPosition()];
 			float angle = body->GetAngle();
-			bodyNode.sprite.rotation = -(CC_RADIANS_TO_DEGREES(angle));
+			bubble.sprite.rotation = -(CC_RADIANS_TO_DEGREES(angle));
 		}
 	}
 }

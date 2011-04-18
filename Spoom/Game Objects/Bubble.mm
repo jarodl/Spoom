@@ -10,9 +10,11 @@
 #import "Helper.h"
 
 #define kBubbleSpriteName @"bubble%d.png"
+#define kInitialVelocity 15.0f
+#define kEdgeBuffer 1.0f
 
 @interface Bubble (PrivateMethods)
-- (void)createBubbleInWorld:(b2World *)world;
+- (void)createBubbleInWorld:(b2World *)world withForce:(b2Vec2)force atPosition:(CGPoint)p;
 @end
 
 @implementation Bubble
@@ -29,21 +31,21 @@
 {
     if ((self = [super initWithWorld:world]))
     {
-        [self createBubbleInWorld:world];
+        b2Vec2 force = b2Vec2(kInitialVelocity, 0);
+        CGPoint startPosition = CGPointMake(64.0f, 250.0f);
+        [self createBubbleInWorld:world withForce:force atPosition:startPosition];
         [self scheduleUpdate];
     }
     
     return self;
 }
 
-- (void)createBubbleInWorld:(b2World *)world
+- (void)createBubbleInWorld:(b2World *)world withForce:(b2Vec2)force atPosition:(CGPoint)p
 {
-	CGPoint startPos = CGPointMake(200, 200);
-	
 	// Create a body definition and set it to be a dynamic body
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
-	bodyDef.position = [Helper toMeters:startPos];
+	bodyDef.position = [Helper toMeters:p];
 	bodyDef.angularDamping = 0.9f;
 	
 	NSString* spriteFrameName = [NSString stringWithFormat:kBubbleSpriteName, 1];
@@ -61,13 +63,27 @@
 	fixtureDef.restitution = 1.0f;
 	
 	[super createBodyInWorld:world bodyDef:&bodyDef fixtureDef:&fixtureDef spriteFrameName:spriteFrameName];
-    
-    b2Vec2 force = b2Vec2(10, 0);
+        
     body->ApplyLinearImpulse(force, bodyDef.position);
 }
 
 - (void)update:(ccTime)dt
 {
+    CGSize screenSize = [[CCDirector sharedDirector] winSizeInPixels];
+    float rightEdge = sprite.position.x + (sprite.contentSize.width / 2);
+    float leftEdge = sprite.position.x - (sprite.contentSize.width / 2);
+    float oldForce = body->GetLinearVelocity().x;
+    
+    if (rightEdge + kEdgeBuffer >= screenSize.width ||
+        (leftEdge - kEdgeBuffer <= 0 && oldForce < 0))
+    {
+        CGPoint oldPosition = sprite.positionInPixels;
+        float direction = oldForce / abs(oldForce);
+        // destroy the bubble and recreate one going the opposite direction
+        b2Vec2 force = b2Vec2(direction * kInitialVelocity, -10.0f);
+        [sprite removeFromParentAndCleanup:YES];
+        [self createBubbleInWorld:body->GetWorld() withForce:force atPosition:oldPosition];
+    }
 }
 
 @end
