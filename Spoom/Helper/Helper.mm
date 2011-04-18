@@ -47,4 +47,9 @@
 	return CGPointMake(screenSize.width * 0.5f, screenSize.height * 0.5f);
 }
 
++ (float)squareDistance:(float)x1 y1:(float)y1 x2:(float)x2 y2:(float)y2
+{
+    return (x2-x1)*(x2-x1) + (y2-y1)*(y2-y1);
+}
+
 @end

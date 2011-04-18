@@ -9,10 +9,6 @@
 #import "Bubble.h"
 #import "Helper.h"
 
-#define kBubbleSpriteName @"bubble%d.png"
-#define kInitialVelocity 15.0f
-#define kEdgeBuffer 1.0f
-
 @interface Bubble (PrivateMethods)
 - (void)createBubbleInWorld:(b2World *)world withForce:(b2Vec2)force atPosition:(CGPoint)p;
 @end

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7A33AF36135CBADF00D8EF4C /* Player.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7A33AF35135CBADF00D8EF4C /* Player.mm */; };
+		7A33AF4F135CD70800D8EF4C /* Spinor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A33AF4B135CD70800D8EF4C /* Spinor.cpp */; };
 		7A4A7C5B135A99F200A703A5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A4A7C5A135A99F200A703A5 /* QuartzCore.framework */; };
 		7A4A7C5D135A99F200A703A5 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A4A7C5C135A99F200A703A5 /* OpenGLES.framework */; };
 		7A4A7C5F135A99F200A703A5 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A4A7C5E135A99F200A703A5 /* OpenAL.framework */; };
@@ -171,6 +172,12 @@
 /* Begin PBXFileReference section */
 		7A33AF34135CBADF00D8EF4C /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Player.h; path = "Game Objects/Player.h"; sourceTree = "<group>"; };
 		7A33AF35135CBADF00D8EF4C /* Player.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Player.mm; path = "Game Objects/Player.mm"; sourceTree = "<group>"; };
+		7A33AF49135CD70800D8EF4C /* Matrix3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Matrix3.h; path = Math/Matrix3.h; sourceTree = "<group>"; };
+		7A33AF4A135CD70800D8EF4C /* Quaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Quaternion.h; path = Math/Quaternion.h; sourceTree = "<group>"; };
+		7A33AF4B135CD70800D8EF4C /* Spinor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Spinor.cpp; path = Math/Spinor.cpp; sourceTree = "<group>"; };
+		7A33AF4C135CD70800D8EF4C /* Spinor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Spinor.h; path = Math/Spinor.h; sourceTree = "<group>"; };
+		7A33AF4D135CD70800D8EF4C /* Vec2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Vec2.h; path = Math/Vec2.h; sourceTree = "<group>"; };
+		7A33AF4E135CD70800D8EF4C /* Vec3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Vec3.h; path = Math/Vec3.h; sourceTree = "<group>"; };
 		7A4A7C56135A99F200A703A5 /* Spoom.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spoom.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A4A7C5A135A99F200A703A5 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		7A4A7C5C135A99F200A703A5 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -508,6 +515,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7A33AF48135CD67900D8EF4C /* Math */ = {
+			isa = PBXGroup;
+			children = (
+				7A33AF49135CD70800D8EF4C /* Matrix3.h */,
+				7A33AF4A135CD70800D8EF4C /* Quaternion.h */,
+				7A33AF4B135CD70800D8EF4C /* Spinor.cpp */,
+				7A33AF4C135CD70800D8EF4C /* Spinor.h */,
+				7A33AF4D135CD70800D8EF4C /* Vec2.h */,
+				7A33AF4E135CD70800D8EF4C /* Vec3.h */,
+			);
+			name = Math;
+			sourceTree = "<group>";
+		};
 		7A4A7C4B135A99F200A703A5 = {
 			isa = PBXGroup;
 			children = (
@@ -543,6 +563,7 @@
 		7A4A7C6A135A99F200A703A5 /* Spoom */ = {
 			isa = PBXGroup;
 			children = (
+				7A33AF48135CD67900D8EF4C /* Math */,
 				7A4A7E7E135BE8DA00A703A5 /* Helper */,
 				7A4A7E6A135BD6B000A703A5 /* Game Objects */,
 				7A4A7E3E135BC14A00A703A5 /* Scenes */,
@@ -1152,6 +1173,7 @@
 				7A4A7E70135BD71900A703A5 /* BodyNode.mm in Sources */,
 				7A4A7E81135BE8EE00A703A5 /* Helper.mm in Sources */,
 				7A33AF36135CBADF00D8EF4C /* Player.mm in Sources */,
+				7A33AF4F135CD70800D8EF4C /* Spinor.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -19,5 +19,6 @@
 + (CGPoint)locationFromTouch:(UITouch *)touch;
 + (CGPoint)locationFromTouches:(NSSet *)touches;
 + (CGPoint)screenCenter;
++ (float)squareDistance:(float)x1 y1:(float)y1 x2:(float)x2 y2:(float)y2;
 
 @end

@@ -8,12 +8,14 @@
 
 #import "BodyNode.h"
 
-@interface Player : BodyNode
+@interface Player : CCSprite
 {
-    
+    float _vx;
+	float _vy;
 }
 
-+ (id)playerWithWorld:(b2World *)world atPoint:(CGPoint)p;
-- (id)initWithWorld:(b2World *)world atPoint:(CGPoint)p;
++ (id)playerAtPoint:(CGPoint)p;
+- (id)initWithPlayerImageAtPoint:(CGPoint)p;
+- (void)increaseVelocityX:(float)x;
 
 @end

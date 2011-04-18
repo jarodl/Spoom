@@ -11,6 +11,9 @@
 #import "Constants.h"
 #import "Bubble.h"
 #import "Player.h"
+// Math
+#import "Vec2.h"
+#import "Vec3.h"
 
 #define kFilterFactor 1.0f	// don't use filter. the code is here just as an example
 
@@ -134,10 +137,11 @@ static GameScene *gameSceneInstance = nil;
         Bubble *bubble = [Bubble bubbleWithWorld:world];
         [self addChild:bubble];
         
+        CCSprite *tmpSprite = [CCSprite spriteWithSpriteFrameName:kPlayerSpriteName];
         CGPoint playerStartPosition = CGPointMake(screenSize.width / 2.0f,
-                                                  screenSize.height / 3.0f);
-        Player *player = [Player playerWithWorld:world atPoint:playerStartPosition];
-        [self addChild:player];
+                                                  groundSprite.contentSize.height + (tmpSprite.contentSize.height / 2.0f));
+        currentPlayer = [Player playerAtPoint:playerStartPosition];
+        [self addChild:currentPlayer];
 		
 		[self schedule: @selector(tick:)];
 	}
@@ -205,20 +209,25 @@ static GameScene *gameSceneInstance = nil;
 }
 
 - (void)accelerometer:(UIAccelerometer*)accelerometer didAccelerate:(UIAcceleration*)acceleration
-{	
-//	static float prevX=0, prevY=0;
-//	
-//	float accelX = (float) acceleration.x * kFilterFactor + (1- kFilterFactor)*prevX;
-//	float accelY = (float) acceleration.y * kFilterFactor + (1- kFilterFactor)*prevY;
-//	
-//	prevX = accelX;
-//	prevY = accelY;
-//	
-//	// accelerometer values are in "Portrait" mode. Change them to Landscape left
-//	// multiply the gravity by 10
-//	b2Vec2 gravity(-accelY * 10, accelX * 10);
-//	
-//	world->SetGravity(gravity);
+{
+    Vec2 accel2D(0,0);
+	Vec3 ax(1, 0, 0);
+	Vec3 ay(-.63f, 0,-.92f);
+	Vec3 az(Vec3::Cross(ay,ax).normalize());
+	ax = Vec3::Cross(az,ay).normalize();
+	
+	accel2D.x = -Vec3::Dot(Vec3(acceleration.x, acceleration.y, acceleration.z), ax);
+	accel2D.y = -Vec3::Dot(Vec3(acceleration.x, acceleration.y, acceleration.z), az);
+	
+	const float xSensitivity = 2.8f;
+//	const float ySensitivity = 2.8f; // yay magic numbers!
+	const float tiltAmplifier = 8; // w0ot more magic numbers
+	
+	// since we are in a landscape orientation.
+	// now apply it to our player's velocity data.
+	// we also rotate the 2D vector by 90 degrees by switching the components and negating one
+    [currentPlayer increaseVelocityX:-(accel2D.y) * tiltAmplifier * xSensitivity];
+//	vy += accel2D.x * tiltAmplifier * ySensitivity; 
 }
 
 #pragma mark -

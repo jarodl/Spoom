@@ -22,10 +22,13 @@ enum
 	kTagBatchNode,
 };
 
+@class Player;
+
 @interface GameScene : CCLayer
 {
     b2World* world;
 	GLESDebugDraw *m_debugDraw;
+    Player *currentPlayer;
 }
 
 + (CCScene *)scene;
