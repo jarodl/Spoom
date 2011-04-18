@@ -10,6 +10,7 @@
 #import "Helper.h"
 #import "Constants.h"
 #import "Bubble.h"
+#import "Player.h"
 
 #define kFilterFactor 1.0f	// don't use filter. the code is here just as an example
 
@@ -132,6 +133,11 @@ static GameScene *gameSceneInstance = nil;
         
         Bubble *bubble = [Bubble bubbleWithWorld:world];
         [self addChild:bubble];
+        
+        CGPoint playerStartPosition = CGPointMake(screenSize.width / 2.0f,
+                                                  screenSize.height / 3.0f);
+        Player *player = [Player playerWithWorld:world atPoint:playerStartPosition];
+        [self addChild:player];
 		
 		[self schedule: @selector(tick:)];
 	}

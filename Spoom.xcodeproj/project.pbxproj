@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7A33AF36135CBADF00D8EF4C /* Player.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7A33AF35135CBADF00D8EF4C /* Player.mm */; };
 		7A4A7C5B135A99F200A703A5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A4A7C5A135A99F200A703A5 /* QuartzCore.framework */; };
 		7A4A7C5D135A99F200A703A5 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A4A7C5C135A99F200A703A5 /* OpenGLES.framework */; };
 		7A4A7C5F135A99F200A703A5 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A4A7C5E135A99F200A703A5 /* OpenAL.framework */; };
@@ -168,6 +169,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7A33AF34135CBADF00D8EF4C /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Player.h; path = "Game Objects/Player.h"; sourceTree = "<group>"; };
+		7A33AF35135CBADF00D8EF4C /* Player.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Player.mm; path = "Game Objects/Player.mm"; sourceTree = "<group>"; };
 		7A4A7C56135A99F200A703A5 /* Spoom.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spoom.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A4A7C5A135A99F200A703A5 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		7A4A7C5C135A99F200A703A5 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -925,6 +928,8 @@
 				7A4A7E6F135BD71900A703A5 /* BodyNode.mm */,
 				7A4A7E6B135BD6DE00A703A5 /* Bubble.h */,
 				7A4A7E6C135BD6DE00A703A5 /* Bubble.mm */,
+				7A33AF34135CBADF00D8EF4C /* Player.h */,
+				7A33AF35135CBADF00D8EF4C /* Player.mm */,
 			);
 			name = "Game Objects";
 			sourceTree = "<group>";
@@ -1146,6 +1151,7 @@
 				7A4A7E6D135BD6DE00A703A5 /* Bubble.mm in Sources */,
 				7A4A7E70135BD71900A703A5 /* BodyNode.mm in Sources */,
 				7A4A7E81135BE8EE00A703A5 /* Helper.mm in Sources */,
+				7A33AF36135CBADF00D8EF4C /* Player.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1241,6 +1247,7 @@
 				7A4A7E35135A99F600A703A5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
