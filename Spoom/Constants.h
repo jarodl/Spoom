@@ -10,7 +10,11 @@
 //to define the ratio so that your most common object type is 1x1 metre.
 #define PTM_RATIO 32
 
-#define kPlayerSpriteName @"player.png"
+#define kPlayerSpriteName @"slug_idle1.png"
+#define kPlayerMoveLeftSprite @"slug_left"
+#define kPlayerMoveRightSprite @"slug_right"
+#define kPlayerMoveSpriteCount 8
+#define kPlayerMoveDelay 0.08f
 
 #define kBubbleSpriteName @"bubble%d.png"
 #define kInitialVelocity 15.0f

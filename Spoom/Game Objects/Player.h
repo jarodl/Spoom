@@ -12,10 +12,15 @@
 {
     float _vx;
 	float _vy;
+    BOOL _isMovingLeft;
+    CCAnimation *_moveLeft;
+    CCAnimation *_moveRight;
 }
 
 + (id)playerAtPoint:(CGPoint)p;
 - (id)initWithPlayerImageAtPoint:(CGPoint)p;
 - (void)increaseVelocityX:(float)x;
+- (void)runMoveRightAnimation;
+- (void)runMoveLeftAnimation;
 
 @end
