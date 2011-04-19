@@ -220,14 +220,12 @@ static GameScene *gameSceneInstance = nil;
 	accel2D.y = -Vec3::Dot(Vec3(acceleration.x, acceleration.y, acceleration.z), az);
 	
 	const float xSensitivity = 2.8f;
-//	const float ySensitivity = 2.8f; // yay magic numbers!
 	const float tiltAmplifier = 8; // w0ot more magic numbers
 	
 	// since we are in a landscape orientation.
 	// now apply it to our player's velocity data.
 	// we also rotate the 2D vector by 90 degrees by switching the components and negating one
     [currentPlayer increaseVelocityX:-(accel2D.y) * tiltAmplifier * xSensitivity];
-//	vy += accel2D.x * tiltAmplifier * ySensitivity; 
 }
 
 #pragma mark -

@@ -15,6 +15,7 @@
 #import "Vec3.h"
 #import "CCAnimationHelper.h"
 
+#define kMoveIdle -1
 #define kMoveLeftTag 0
 #define kMoveRightTag 1
 
@@ -32,10 +33,17 @@
         _vx = 0;
         _vy = 0;
         self.position = p;
-        _isMovingLeft = NO;
+        _currentActionTag = kMoveIdle;
         
-        _moveLeft = [[[CCAnimation animationWithFrame:kPlayerMoveLeftSprite frameCount:kPlayerMoveSpriteCount delay:kPlayerMoveDelay] retain] autorelease];
-        _moveRight = [[[CCAnimation animationWithFrame:kPlayerMoveRightSprite frameCount:kPlayerMoveSpriteCount delay:kPlayerMoveDelay] retain] autorelease];
+        CCAnimation *move = [CCAnimation animationWithFrame:kPlayerMoveLeftSprite frameCount:kPlayerMoveSpriteCount delay:kPlayerMoveDelay];
+        CCAnimate* animate = [CCAnimate actionWithAnimation:move];
+        _moveLeftAction = [[CCRepeatForever actionWithAction:animate] retain];
+        _moveLeftAction.tag = kMoveLeftTag;
+        
+        move = [CCAnimation animationWithFrame:kPlayerMoveRightSprite frameCount:kPlayerMoveSpriteCount delay:kPlayerMoveDelay];
+        animate = [CCAnimate actionWithAnimation:move];
+        _moveRightAction = [[CCRepeatForever actionWithAction:animate] retain];
+        _moveRightAction.tag = kMoveRightTag;
         
         [self scheduleUpdate];
     }
@@ -48,61 +56,50 @@
     _vx += x;
 }
 
-- (void)runMoveRightAnimation
+- (void)runMoveAction:(CCAction *)action andStop:(int)tag
 {
-    [self stopActionByTag:kMoveLeftTag];
-    CCAnimate* animate = [CCAnimate actionWithAnimation:_moveRight];
-    CCRepeatForever* repeat = [CCRepeatForever actionWithAction:animate];
-    repeat.tag = kMoveRightTag;
-    [self runAction:repeat];
-    _isMovingLeft = NO;
-}
-
-- (void)runMoveLeftAnimation
-{
-    [self stopActionByTag:kMoveRightTag];
-    CCAnimate* animate = [CCAnimate actionWithAnimation:_moveLeft];
-    CCRepeatForever* repeat = [CCRepeatForever actionWithAction:animate];
-    repeat.tag = kMoveLeftTag;
-    [self runAction:repeat];
-    _isMovingLeft = YES;
+    [self stopActionByTag:tag];
+    [self runAction:action];
+    _currentActionTag = action.tag;
 }
 
 - (void)update:(ccTime)dt
 {
-    float lastX = self.position.x;
-	
     self.position = ccp(self.position.x + _vx, self.position.y);
 	// put the breaks on our velocity.
 	_vx *= 0.2f;
     
-    if (_vx > 0 && _isMovingLeft)
+    if (_vx > 0 && _currentActionTag != kMoveRightTag)
     {
-        [self runMoveRightAnimation];
+        [self runMoveAction:_moveRightAction andStop:kMoveLeftTag];
     }
-    else if (_vx < 0 && !_isMovingLeft)
+    else if (_vx < 0 && _currentActionTag != kMoveLeftTag)
     {
-        [self runMoveLeftAnimation];
+        [self runMoveAction:_moveLeftAction andStop:kMoveRightTag];
     }
     
 	//bound the player
-	if (self.position.x > 460)
+    CGSize screenSize = [[CCDirector sharedDirector] winSizeInPixels];
+    float left = (self.contentSizeInPixels.width / 2.0f);
+    float right = screenSize.width - left;
+	if (self.position.x >= right)
 	{
-        self.position = ccp(460, self.position.y);
+        self.position = ccp(right, self.position.y);
 	}
-	if( self.position.x < 20)
+	if( self.position.x <= left)
 	{
-        self.position = ccp(20, self.position.y);
+        self.position = ccp(left, self.position.y);
 	}
-	
-	const float deadZone = .2f;
-	float diffx = self.position.x - lastX;
-	float diffy = 0;
-    float dist = [Helper squareDistance:0 y1:0 x2:diffx y2:diffy];
-    if (dist >= deadZone)
-	{
-        // play the idle animation
-	}
+}
+
+#pragma mark -
+#pragma mark Clean up
+
+- (void)dealloc
+{
+    [_moveLeftAction release];
+    [_moveRightAction release];
+    [super dealloc];
 }
 
 @end

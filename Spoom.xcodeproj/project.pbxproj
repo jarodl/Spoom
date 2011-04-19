@@ -10,6 +10,7 @@
 		7A33AF36135CBADF00D8EF4C /* Player.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7A33AF35135CBADF00D8EF4C /* Player.mm */; };
 		7A33AF4F135CD70800D8EF4C /* Spinor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A33AF4B135CD70800D8EF4C /* Spinor.cpp */; };
 		7A33AF62135D3EB200D8EF4C /* CCAnimationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A33AF61135D3EB200D8EF4C /* CCAnimationHelper.m */; };
+		7A33AF79135D58CC00D8EF4C /* Arrow.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A33AF78135D58CC00D8EF4C /* Arrow.m */; };
 		7A4A7C5B135A99F200A703A5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A4A7C5A135A99F200A703A5 /* QuartzCore.framework */; };
 		7A4A7C5D135A99F200A703A5 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A4A7C5C135A99F200A703A5 /* OpenGLES.framework */; };
 		7A4A7C5F135A99F200A703A5 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A4A7C5E135A99F200A703A5 /* OpenAL.framework */; };
@@ -181,6 +182,8 @@
 		7A33AF4E135CD70800D8EF4C /* Vec3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Vec3.h; path = Math/Vec3.h; sourceTree = "<group>"; };
 		7A33AF60135D3EB200D8EF4C /* CCAnimationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCAnimationHelper.h; path = Helper/CCAnimationHelper.h; sourceTree = "<group>"; };
 		7A33AF61135D3EB200D8EF4C /* CCAnimationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCAnimationHelper.m; path = Helper/CCAnimationHelper.m; sourceTree = "<group>"; };
+		7A33AF77135D58CC00D8EF4C /* Arrow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Arrow.h; path = "Game Objects/Arrow.h"; sourceTree = "<group>"; };
+		7A33AF78135D58CC00D8EF4C /* Arrow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Arrow.m; path = "Game Objects/Arrow.m"; sourceTree = "<group>"; };
 		7A4A7C56135A99F200A703A5 /* Spoom.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spoom.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A4A7C5A135A99F200A703A5 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		7A4A7C5C135A99F200A703A5 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -954,6 +957,8 @@
 				7A4A7E6C135BD6DE00A703A5 /* Bubble.mm */,
 				7A33AF34135CBADF00D8EF4C /* Player.h */,
 				7A33AF35135CBADF00D8EF4C /* Player.mm */,
+				7A33AF77135D58CC00D8EF4C /* Arrow.h */,
+				7A33AF78135D58CC00D8EF4C /* Arrow.m */,
 			);
 			name = "Game Objects";
 			sourceTree = "<group>";
@@ -1180,6 +1185,7 @@
 				7A33AF36135CBADF00D8EF4C /* Player.mm in Sources */,
 				7A33AF4F135CD70800D8EF4C /* Spinor.cpp in Sources */,
 				7A33AF62135D3EB200D8EF4C /* CCAnimationHelper.m in Sources */,
+				7A33AF79135D58CC00D8EF4C /* Arrow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
