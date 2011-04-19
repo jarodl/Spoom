@@ -10,6 +10,14 @@
 //to define the ratio so that your most common object type is 1x1 metre.
 #define PTM_RATIO 32
 
+#define kArrowSpriteName @"vine2.png"
+#define kArrowMoveSprite @"vine"
+#define KArrowMoveSpriteCount 2
+#define kArrowMoveDelay 0.02f
+#define kArrowInitialVelocity 5
+#define kArrowSpriteTag 3
+#define kArrowLiveTime 2.0f
+
 #define kPlayerSpriteName @"slug_idle1.png"
 #define kPlayerMoveLeftSprite @"slug_left"
 #define kPlayerMoveRightSprite @"slug_right"
@@ -19,3 +27,10 @@
 #define kBubbleSpriteName @"bubble%d.png"
 #define kInitialVelocity 15.0f
 #define kEdgeBuffer 1.0f
+
+#define kFilterFactor 1.0f	// don't use filter. the code is here just as an example
+
+#define kGameSpriteImageName @"spoom.png"
+#define kGameSpriteDataFilename @"spoom.plist"
+#define kGroundSpriteFilename @"ground.png"
+#define kBackgroundSpriteFilename @"background.png"

@@ -10,6 +10,11 @@
 
 @interface Arrow : CCSprite
 {
+    float _vy;
+    float _timeAlive;
 }
+
++ (id)arrowAtPoint:(CGPoint)p;
+- (id)initWithArrowImageAtPoint:(CGPoint)p;
 
 @end

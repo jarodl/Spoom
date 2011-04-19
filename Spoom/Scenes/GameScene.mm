@@ -11,16 +11,10 @@
 #import "Constants.h"
 #import "Bubble.h"
 #import "Player.h"
+#import "Arrow.h"
 // Math
 #import "Vec2.h"
 #import "Vec3.h"
-
-#define kFilterFactor 1.0f	// don't use filter. the code is here just as an example
-
-#define kGameSpriteImageName @"spoom.png"
-#define kGameSpriteDataFilename @"spoom.plist"
-#define kGroundSpriteFilename @"ground.png"
-#define kBackgroundSpriteFilename @"background.png"
 
 @implementation GameScene
 
@@ -61,7 +55,7 @@ static GameScene *gameSceneInstance = nil;
 		self.isTouchEnabled = YES;
 		// enable accelerometer
 		self.isAccelerometerEnabled = YES;
-		
+        
 		CGSize screenSize = [CCDirector sharedDirector].winSize;
 		CCLOG(@"Screen width %0.2f screen height %0.2f",screenSize.width,screenSize.height);
 		
@@ -97,12 +91,12 @@ static GameScene *gameSceneInstance = nil;
         CCLOG(@"Positioned %@ at: (%f, %f)",
               groundSprite, groundSprite.position.x,
               groundSprite.position.y);
-        [self addChild:groundSprite];
+        [self addChild:groundSprite z:-2];
         
         CCSprite *background = [CCSprite spriteWithSpriteFrameName:kBackgroundSpriteFilename];
         background.position = CGPointMake(background.contentSize.width / 2,
                                           background.contentSize.height / 2 + groundSprite.contentSize.height);
-        [self addChild:background z:-3];
+        [self addChild:background z:-4];
 		
 		// Define the ground body.
 		b2BodyDef groundBodyDef;
@@ -179,7 +173,11 @@ static GameScene *gameSceneInstance = nil;
 	int32 velocityIterations = 8;
 	int32 positionIterations = 1;
 	world->Step(timeStep, velocityIterations, positionIterations);
-	
+    
+    Arrow *arrow = (Arrow *)[self getChildByTag:kArrowSpriteTag];
+    if (arrow != nil && arrow.visible == NO)
+         [self removeChild:arrow cleanup:YES];
+ 	
 	// for each body, get its assigned BodyNode and update the sprite's position
 	for (b2Body* body = world->GetBodyList(); body != nil; body = body->GetNext())
 	{
@@ -199,13 +197,12 @@ static GameScene *gameSceneInstance = nil;
 
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	//Add a new body/atlas sprite at the touched location
-	for(UITouch *touch in touches)
+	//Add a new body/atlas sprite at the player location
+    if ([self getChildByTag:kArrowSpriteTag] == nil)
     {
-		CGPoint location = [touch locationInView: [touch view]];
-		
-		location = [[CCDirector sharedDirector] convertToGL: location];
-	}
+        Arrow *arrow = [Arrow arrowAtPoint:currentPlayer.position];
+        [self addChild:arrow z:-3 tag:kArrowSpriteTag];
+    }
 }
 
 - (void)accelerometer:(UIAccelerometer*)accelerometer didAccelerate:(UIAcceleration*)acceleration

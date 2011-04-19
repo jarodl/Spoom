@@ -9,10 +9,6 @@
 #import "Player.h"
 #import "Helper.h"
 #import "Constants.h"
-// Math
-#import "Spinor.h"
-#import "Vec2.h"
-#import "Vec3.h"
 #import "CCAnimationHelper.h"
 
 #define kMoveIdle -1
@@ -20,6 +16,9 @@
 #define kMoveRightTag 1
 
 @implementation Player
+
+#pragma mark -
+#pragma mark Set up
 
 + (id)playerAtPoint:(CGPoint)p
 {
@@ -51,16 +50,19 @@
     return self;
 }
 
-- (void)increaseVelocityX:(float)x
-{
-    _vx += x;
-}
+#pragma mark -
+#pragma mark Animation
 
 - (void)runMoveAction:(CCAction *)action andStop:(int)tag
 {
     [self stopActionByTag:tag];
     [self runAction:action];
     _currentActionTag = action.tag;
+}
+
+- (void)increaseVelocityX:(float)x
+{
+    _vx += x;
 }
 
 - (void)update:(ccTime)dt

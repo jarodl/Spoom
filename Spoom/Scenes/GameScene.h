@@ -23,6 +23,7 @@ enum
 };
 
 @class Player;
+@class Arrow;
 
 @interface GameScene : CCLayer
 {
