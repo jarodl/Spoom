@@ -187,13 +187,15 @@ static GameScene *gameSceneInstance = nil;
     Arrow *arrow = (Arrow *)[self getChildByTag:kArrowSpriteTag];
     [arrow deactivate];
     
-    b2Vec2 leftForce = b2Vec2(-1 * kBubbleInitialVelocity, kBubbleInitialVelocity);
-    CGPoint leftPoint = ccp(bubble.position.x - bubble.sprite.contentSizeInPixels.width, bubble.sprite.position.y);
+    b2Vec2 leftForce = b2Vec2(0, kBubbleInitialVelocity);
+    CGPoint leftPoint = ccp(bubble.sprite.position.x - bubble.sprite.contentSize.width,
+                            bubble.sprite.position.y);
     Bubble *leftPop = [Bubble bubbleWithWorld:world andForce:leftForce atPosition:leftPoint];
     [self addChild:leftPop];
     
     b2Vec2 rightForce = b2Vec2(kBubbleInitialVelocity, kBubbleInitialVelocity);
-    CGPoint rightPoint = ccp(bubble.position.x + bubble.sprite.contentSizeInPixels.width, bubble.sprite.position.y);
+    CGPoint rightPoint = ccp(bubble.sprite.position.x + bubble.sprite.contentSize.width,
+                             bubble.sprite.position.y);
     Bubble *rightPop = [Bubble bubbleWithWorld:world andForce:rightForce atPosition:rightPoint];
     [self addChild:rightPop];
     

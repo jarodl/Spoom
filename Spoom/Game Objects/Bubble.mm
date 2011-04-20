@@ -92,7 +92,7 @@
     if (rightEdge + kEdgeBuffer >= screenSize.width ||
         (leftEdge - kEdgeBuffer <= 0 && oldForce < 0))
     {
-        CGPoint oldPosition = sprite.positionInPixels;
+        CGPoint oldPosition = self.sprite.position;
         float direction = oldForce / abs(oldForce);
         // destroy the bubble and recreate one going the opposite direction
         b2Vec2 force = b2Vec2(direction * kBubbleInitialVelocity, -10.0f);
