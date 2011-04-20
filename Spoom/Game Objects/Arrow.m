@@ -47,16 +47,14 @@
 
 - (void)update:(ccTime)dt
 {
-    if (self.position.y + (self.contentSizeInPixels.height / 2.0f) >=
+    if (self.position.y + (self.contentSizeInPixels.height / 2.0f) + 4.0f >=
         [[CCDirector sharedDirector] winSizeInPixels].height)
     {
         _vy = 0;
         _timeAlive += dt;
         
         if (_timeAlive > kArrowLiveTime)
-        {
             [self deactivate];
-        }
     }
     else
         self.position = ccp(self.position.x, self.position.y + _vy);

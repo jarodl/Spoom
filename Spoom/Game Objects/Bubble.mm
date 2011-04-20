@@ -25,7 +25,7 @@
 
 + (id)bubbleWithWorld:(b2World *)world andForce:(b2Vec2)force atPosition:(CGPoint)p
 {
-    return [[[self alloc] initWithWorld:world] autorelease];
+    return [[[self alloc] initWithWorld:world andForce:force atPosition:p] autorelease];
 }
 
 - (id)initWithWorld:(b2World *)world
