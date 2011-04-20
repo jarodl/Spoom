@@ -10,7 +10,7 @@
 #import "Helper.h"
 
 @interface Bubble (PrivateMethods)
-- (void)createBubbleInWorld:(b2World *)world withForce:(b2Vec2)force atPosition:(CGPoint)p;
+- (void)createBubbleInWorld:(b2World *)world withForce:(b2Vec2)force atPosition:(CGPoint)p withSize:(int)size;
 @end
 
 @implementation Bubble
@@ -23,9 +23,9 @@
     return [[[self alloc] initWithWorld:world] autorelease];
 }
 
-+ (id)bubbleWithWorld:(b2World *)world andForce:(b2Vec2)force atPosition:(CGPoint)p
++ (id)bubbleWithWorld:(b2World *)world andForce:(b2Vec2)force atPosition:(CGPoint)p withSize:(int)size
 {
-    return [[[self alloc] initWithWorld:world andForce:force atPosition:p] autorelease];
+    return [[[self alloc] initWithWorld:world andForce:force atPosition:p withSize:size] autorelease];
 }
 
 - (id)initWithWorld:(b2World *)world
@@ -34,33 +34,35 @@
     {
         b2Vec2 force = b2Vec2(kBubbleInitialVelocity, 0);
         CGPoint startPosition = CGPointMake(64.0f, 250.0f);
-        [self createBubbleInWorld:world withForce:force atPosition:startPosition];
+        [self createBubbleInWorld:world withForce:force atPosition:startPosition withSize:LargeBubble];
         [self scheduleUpdate];
     }
     
     return self;
 }
 
-- (id)initWithWorld:(b2World *)world andForce:(b2Vec2)force atPosition:(CGPoint)p
+- (id)initWithWorld:(b2World *)world andForce:(b2Vec2)force atPosition:(CGPoint)p withSize:(int)size
 {
     if ((self = [super initWithWorld:world]))
     {
-        [self createBubbleInWorld:world withForce:force atPosition:p];
+        [self createBubbleInWorld:world withForce:force atPosition:p withSize:size];
         [self scheduleUpdate];
     }
     
     return self;
 }
 
-- (void)createBubbleInWorld:(b2World *)world withForce:(b2Vec2)force atPosition:(CGPoint)p
+- (void)createBubbleInWorld:(b2World *)world withForce:(b2Vec2)force atPosition:(CGPoint)p withSize:(int)size
 {
+    _size = size;
+    
 	// Create a body definition and set it to be a dynamic body
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position = [Helper toMeters:p];
 	bodyDef.angularDamping = 0.9f;
 	
-	NSString* spriteFrameName = [NSString stringWithFormat:kBubbleSpriteName, 1];
+	NSString* spriteFrameName = [NSString stringWithFormat:kBubbleSpriteName, _size];
 	CCSprite* tempSprite = [CCSprite spriteWithSpriteFrameName:spriteFrameName];
 	
 	b2CircleShape shape;
@@ -95,8 +97,8 @@
         CGPoint oldPosition = self.sprite.position;
         float direction = oldForce / abs(oldForce);
         // destroy the bubble and recreate one going the opposite direction
-        b2Vec2 force = b2Vec2(direction * kBubbleInitialVelocity, -10.0f);
-        [self createBubbleInWorld:body->GetWorld() withForce:force atPosition:oldPosition];
+        b2Vec2 force = b2Vec2(direction * (kBubbleInitialVelocity / _size), -10.0f / _size);
+        [self createBubbleInWorld:body->GetWorld() withForce:force atPosition:oldPosition withSize:_size];
     }
 }
 
