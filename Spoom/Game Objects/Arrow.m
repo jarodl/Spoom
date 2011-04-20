@@ -33,6 +33,16 @@
 }
 
 #pragma mark -
+#pragma mark Clean up
+
+- (void)deactivate
+{
+    self.visible = NO;
+    [self unscheduleAllSelectors];
+    [[self parent] removeChild:self cleanup:YES];
+}
+
+#pragma mark -
 #pragma mark Animation
 
 - (void)update:(ccTime)dt
@@ -45,8 +55,7 @@
         
         if (_timeAlive > kArrowLiveTime)
         {
-            self.visible = NO;
-            [self unscheduleAllSelectors];
+            [self deactivate];
         }
     }
     else

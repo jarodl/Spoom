@@ -16,5 +16,6 @@
 
 + (id)arrowAtPoint:(CGPoint)p;
 - (id)initWithArrowImageAtPoint:(CGPoint)p;
+- (void)deactivate;
 
 @end

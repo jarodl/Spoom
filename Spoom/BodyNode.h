@@ -26,5 +26,6 @@
           spriteFrameName:(NSString*)spriteFrameName;
 - (void)removeSprite;
 - (void)removeBody;
+- (void)deactivate;
 
 @end

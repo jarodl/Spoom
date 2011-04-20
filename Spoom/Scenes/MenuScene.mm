@@ -8,6 +8,7 @@
 
 #import "MenuScene.h"
 #import "GameScene.h"
+#import "Constants.h"
 
 @implementation MenuScene
 
@@ -27,6 +28,15 @@
     if ((self = [super init]))
     {
         self.isTouchEnabled = YES;
+        
+        // Load all sprite data from the plist
+		CCSpriteFrameCache* frameCache = [CCSpriteFrameCache sharedSpriteFrameCache];
+		[frameCache addSpriteFramesWithFile:kGameSpriteDataFilename];
+        
+        CCSprite *background = [CCSprite spriteWithSpriteFrameName:kMenuBackgroundSpriteFilename];
+        background.position = CGPointMake(background.contentSize.width / 2.0f,
+                                          background.contentSize.height / 2.0f);
+        [self addChild:background z:-4];
     }
     
     CCLOG(@"Initialized %@", self);

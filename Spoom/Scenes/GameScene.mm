@@ -66,19 +66,6 @@ static GameScene *gameSceneInstance = nil;
 		bool doSleep = false;
 		world = new b2World(gravity, doSleep);
 		world->SetContinuousPhysics(true);
-		m_debugDraw = new GLESDebugDraw(PTM_RATIO);
-		world->SetDebugDraw(m_debugDraw);
-		uint32 flags = 0;
-		flags += b2DebugDraw::e_shapeBit;
-        //		flags += b2DebugDraw::e_jointBit;
-        //		flags += b2DebugDraw::e_aabbBit;
-        //		flags += b2DebugDraw::e_pairBit;
-        //		flags += b2DebugDraw::e_centerOfMassBit;
-		m_debugDraw->SetFlags(flags);
-        
-        // Load all sprite data from the plist
-		CCSpriteFrameCache* frameCache = [CCSpriteFrameCache sharedSpriteFrameCache];
-		[frameCache addSpriteFramesWithFile:kGameSpriteDataFilename];
         
         // batch node for all dynamic elements
 		CCSpriteBatchNode* batch = [CCSpriteBatchNode batchNodeWithFile:kGameSpriteImageName capacity:100];
@@ -147,23 +134,6 @@ static GameScene *gameSceneInstance = nil;
 #pragma mark -
 #pragma mark Update/draw
 
-- (void)draw
-{
-    // Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Needed states:  GL_VERTEX_ARRAY, 
-	// Unneeded states: GL_TEXTURE_2D, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	glDisable(GL_TEXTURE_2D);
-	glDisableClientState(GL_COLOR_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	
-	world->DrawDebugData();
-	
-	// restore default GL states
-	glEnable(GL_TEXTURE_2D);
-	glEnableClientState(GL_COLOR_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-}
-
 - (void)tick:(ccTime)dt
 {
 	// The number of iterations influence the accuracy of the physics simulation. With higher values the
@@ -175,21 +145,62 @@ static GameScene *gameSceneInstance = nil;
 	world->Step(timeStep, velocityIterations, positionIterations);
     
     Arrow *arrow = (Arrow *)[self getChildByTag:kArrowSpriteTag];
-    if (arrow != nil && arrow.visible == NO)
-         [self removeChild:arrow cleanup:YES];
- 	
+     	
 	// for each body, get its assigned BodyNode and update the sprite's position
 	for (b2Body* body = world->GetBodyList(); body != nil; body = body->GetNext())
 	{
 		Bubble* bubble = (Bubble *)body->GetUserData();
 		if (bubble != NULL && bubble.sprite != nil)
 		{
-			// update the sprite's position to where their physics bodies are
-			bubble.sprite.position = [Helper toPixels:body->GetPosition()];
+			// update the bubble's position to where their physics bodies are
+            CGPoint bubblePosition = [Helper toPixels:body->GetPosition()];
+			bubble.sprite.position = bubblePosition;
 			float angle = body->GetAngle();
 			bubble.sprite.rotation = -(CC_RADIANS_TO_DEGREES(angle));
+            
+            // check for a collision with the player or arrow
+            if (arrow != nil)
+            {
+                if (CGRectIntersectsRect([bubble.sprite boundingBox],
+                                         [arrow boundingBox]))
+                {
+                    [self handleArrowBubbleCollision:bubble];
+                }
+            }
+            
+            // check if the player was hit by a bubble
+            if (bubble != nil)
+            {
+                if (CGRectIntersectsRect([currentPlayer boundingBox],
+                                         [bubble.sprite boundingBox]))
+                    [self handleBubblePlayerCollision];
+            }
 		}
 	}
+}
+
+#pragma mark -
+#pragma mark Collision detection
+
+- (void)handleArrowBubbleCollision:(Bubble *)bubble
+{
+    Arrow *arrow = (Arrow *)[self getChildByTag:kArrowSpriteTag];
+    [arrow deactivate];
+    b2Vec2 leftForce = b2Vec2(-kBubbleInitialVelocity, kBubbleInitialVelocity);
+    Bubble *leftPop = [Bubble bubbleWithWorld:world andForce:leftForce atPosition:bubble.sprite.position];
+    [self addChild:leftPop];
+    
+    b2Vec2 rightForce = b2Vec2(kBubbleInitialVelocity, kBubbleInitialVelocity);
+    Bubble *rightPop = [Bubble bubbleWithWorld:world andForce:rightForce atPosition:bubble.sprite.position];
+    [self addChild:rightPop];
+    
+    [bubble deactivate];
+    bubble = nil;
+}
+
+- (void)handleBubblePlayerCollision
+{
+    
 }
 
 #pragma mark -
@@ -200,7 +211,8 @@ static GameScene *gameSceneInstance = nil;
 	//Add a new body/atlas sprite at the player location
     if ([self getChildByTag:kArrowSpriteTag] == nil)
     {
-        Arrow *arrow = [Arrow arrowAtPoint:currentPlayer.position];
+        CGPoint arrowPosition = ccp(currentPlayer.position.x, 0);
+        Arrow *arrow = [Arrow arrowAtPoint:arrowPosition];
         [self addChild:arrow z:-3 tag:kArrowSpriteTag];
     }
 }

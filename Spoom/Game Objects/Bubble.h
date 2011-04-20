@@ -15,5 +15,7 @@
 }
 
 + (id)bubbleWithWorld:(b2World *)world;
++ (id)bubbleWithWorld:(b2World *)world andForce:(b2Vec2)force atPosition:(CGPoint)p;
+- (id)initWithWorld:(b2World *)world andForce:(b2Vec2)force atPosition:(CGPoint)p;
 
 @end

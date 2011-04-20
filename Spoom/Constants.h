@@ -25,7 +25,7 @@
 #define kPlayerMoveDelay 0.08f
 
 #define kBubbleSpriteName @"bubble%d.png"
-#define kInitialVelocity 15.0f
+#define kBubbleInitialVelocity 15.0f
 #define kEdgeBuffer 1.0f
 
 #define kFilterFactor 1.0f	// don't use filter. the code is here just as an example
@@ -34,3 +34,4 @@
 #define kGameSpriteDataFilename @"spoom.plist"
 #define kGroundSpriteFilename @"ground.png"
 #define kBackgroundSpriteFilename @"background.png"
+#define kMenuBackgroundSpriteFilename @"menu.png"

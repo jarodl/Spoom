@@ -18,7 +18,6 @@
 {
     if ((self = [super init]))
     {
-        
     }
     
     return self;
@@ -32,9 +31,8 @@
 	NSAssert(world != NULL, @"world is null!");
 	NSAssert(bodyDef != NULL, @"bodyDef is null!");
 	NSAssert(spriteFrameName != nil, @"spriteFrameName is nil!");
-	
-	[self removeSprite];
-	[self removeBody];
+    
+    [self deactivate];
 	
 	CCSpriteBatchNode* batch = [[GameScene sharedGameScene] getSpriteBatch];
 	sprite = [CCSprite spriteWithSpriteFrameName:spriteFrameName];
@@ -49,11 +47,19 @@
 	}
 }
 
+- (void)deactivate
+{
+    [self unscheduleAllSelectors];
+    [self removeSprite];
+    [self removeBody];
+}
+
 - (void)removeSprite
 {
 	CCSpriteBatchNode* batch = [[GameScene sharedGameScene] getSpriteBatch];
 	if (sprite != nil && [batch.children containsObject:sprite])
 	{
+        sprite.visible = NO;
 		[batch.children removeObject:sprite];
 		sprite = nil;
 	}

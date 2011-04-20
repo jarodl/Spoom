@@ -23,13 +23,29 @@
     return [[[self alloc] initWithWorld:world] autorelease];
 }
 
++ (id)bubbleWithWorld:(b2World *)world andForce:(b2Vec2)force atPosition:(CGPoint)p
+{
+    return [[[self alloc] initWithWorld:world] autorelease];
+}
+
 - (id)initWithWorld:(b2World *)world
 {
     if ((self = [super initWithWorld:world]))
     {
-        b2Vec2 force = b2Vec2(kInitialVelocity, 0);
+        b2Vec2 force = b2Vec2(kBubbleInitialVelocity, 0);
         CGPoint startPosition = CGPointMake(64.0f, 250.0f);
         [self createBubbleInWorld:world withForce:force atPosition:startPosition];
+        [self scheduleUpdate];
+    }
+    
+    return self;
+}
+
+- (id)initWithWorld:(b2World *)world andForce:(b2Vec2)force atPosition:(CGPoint)p
+{
+    if ((self = [super initWithWorld:world]))
+    {
+        [self createBubbleInWorld:world withForce:force atPosition:p];
         [self scheduleUpdate];
     }
     
@@ -63,6 +79,9 @@
     body->ApplyLinearImpulse(force, bodyDef.position);
 }
 
+#pragma mark -
+#pragma mark Update
+
 - (void)update:(ccTime)dt
 {
     CGSize screenSize = [[CCDirector sharedDirector] winSizeInPixels];
@@ -76,8 +95,7 @@
         CGPoint oldPosition = sprite.positionInPixels;
         float direction = oldForce / abs(oldForce);
         // destroy the bubble and recreate one going the opposite direction
-        b2Vec2 force = b2Vec2(direction * kInitialVelocity, -10.0f);
-        [sprite removeFromParentAndCleanup:YES];
+        b2Vec2 force = b2Vec2(direction * kBubbleInitialVelocity, -10.0f);
         [self createBubbleInWorld:body->GetWorld() withForce:force atPosition:oldPosition];
     }
 }

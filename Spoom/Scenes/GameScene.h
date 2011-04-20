@@ -24,6 +24,7 @@ enum
 
 @class Player;
 @class Arrow;
+@class Bubble;
 
 @interface GameScene : CCLayer
 {
@@ -35,5 +36,7 @@ enum
 + (CCScene *)scene;
 + (GameScene *)sharedGameScene;
 - (CCSpriteBatchNode *)getSpriteBatch;
+- (void)handleArrowBubbleCollision:(Bubble *)bubble;
+- (void)handleBubblePlayerCollision;
 
 @end
